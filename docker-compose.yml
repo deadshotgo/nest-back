@@ -1,0 +1,89 @@
+version: '3.8'
+
+services:
+
+  nest-back:
+    build: .
+    volumes:
+      - .:/nest-back
+    container_name: nest-back
+    hostname: nest-back
+    depends_on:
+      - nest-db
+      - nest-redis
+    ports:
+      - '4001:4001'
+    restart: unless-stopped
+    env_file: ./.env
+    networks:
+      - nest
+
+  nest-db:
+    image: postgres:15.2-alpine3.17
+    container_name: nest-db
+    hostname: nest-db
+    env_file: .db.env
+    volumes:
+      - ./volumes/db:/var/lib/postgresql/data
+    expose:
+      - '5432'
+    ports:
+      - '5432:5432'
+    restart: always
+    networks:
+      - nest
+
+  nest-redis:
+    image: redis:7.2-rc2-alpine
+    container_name: nest-redis
+    restart: always
+    ports:
+      - '6378:6378'
+    volumes:
+      - ./volumes/redis:/data
+    networks:
+      - nest
+    command: >
+      --requirepass admin
+
+  nest-sessions-redis:
+    image: redis:7.2-rc2-alpine
+    container_name: nest-sessions-redis
+    restart: always
+    ports:
+      - '6381:6381'
+    volumes:
+      - sessions-redis:/data
+    networks:
+      - nest
+    command: >
+      --requirepass admin
+
+  nest-pgadmin:
+    container_name: nest-pgadmin
+    attach: false
+    hostname: nest-pgadmin
+    volumes:
+      - ./volumes/pgadmin:/var/lib/pgadmin
+    depends_on:
+      - nest-db
+    image: dpage/pgadmin4
+    env_file: .pgadmin.env
+    expose:
+      - '80'
+    ports:
+      - '5051:80'
+    restart: always
+    networks:
+      - nest
+    logging:
+      driver: none
+
+
+networks:
+  nest:
+    external: true
+
+volumes:
+  sessions-redis:
+    external: false
