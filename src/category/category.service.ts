@@ -17,6 +17,9 @@ export class CategoryService {
   findAll(query: any) {
     return paginate(query, this.categoryRepository, {
       sortableColumns: ['id'],
+      relations: {
+        subCategory: true,
+      },
     });
   }
 

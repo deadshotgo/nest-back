@@ -10,5 +10,5 @@ export class CreateCategoryDto {
   @IsBoolean()
   @IsNotEmpty()
   @ApiProperty()
-  isActive: string;
+  isActive: boolean;
 }

@@ -11,5 +11,5 @@ export class UpdateCategoryDto extends PartialType(CreateCategoryDto) {
   @IsBoolean()
   @IsNotEmpty()
   @ApiProperty()
-  isActive: string;
+  isActive: boolean;
 }

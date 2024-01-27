@@ -8,7 +8,9 @@ import { AuthModule } from './auth/auth.module';
 import { CategoryModule } from './category/category.module';
 import { User } from './user/entities/user.entity';
 import { Category } from './category/entities/category.entity';
-export const entities = [User, Category];
+import { SubCategoryModule } from './sub-category/sub-category.module';
+import { SubCategory } from './sub-category/entities/sub-category.entity';
+export const entities = [User, Category, SubCategory];
 @Module({
   imports: [
     ConfigModule,
@@ -31,6 +33,7 @@ export const entities = [User, Category];
       inject: [ConfigService],
     }),
     CategoryModule,
+    SubCategoryModule,
   ],
   controllers: [AppController],
   providers: [AppService],

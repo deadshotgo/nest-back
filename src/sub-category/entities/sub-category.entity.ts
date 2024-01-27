@@ -2,25 +2,30 @@ import {
   Column,
   CreateDateColumn,
   Entity,
-  OneToMany,
+  JoinColumn,
+  ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { SubCategory } from '../../sub-category/entities/sub-category.entity';
+import { Category } from '../../category/entities/category.entity';
 
-@Entity({ name: 'category' })
-export class Category {
+@Entity({ name: 'sub_category' })
+export class SubCategory {
   @PrimaryGeneratedColumn()
   id: number;
 
   @Column()
   name: string;
 
+  @ManyToOne(() => Category, (category) => category.subCategory)
+  @JoinColumn([{ name: 'category_id', referencedColumnName: 'id' }])
+  category: Category;
+
+  @Column({ name: 'category_id' })
+  category_id: number;
+
   @Column({ name: 'is_active' })
   isActive: boolean;
-
-  @OneToMany(() => SubCategory, (order) => order.category)
-  subCategory: SubCategory[];
 
   @CreateDateColumn({
     type: 'timestamp',
