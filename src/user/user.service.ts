@@ -1,9 +1,9 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { User } from './user.entity';
 import { paginate } from 'nestjs-paginate';
 import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
+import { User } from './entities/user.entity';
 
 @Injectable()
 export class UserService {
@@ -12,19 +12,19 @@ export class UserService {
     private userRepository: Repository<User>,
   ) {}
 
-  async getUsers(query) {
+  async findAll(query) {
     return paginate(query, this.userRepository, {
       sortableColumns: ['id'],
     });
   }
 
-  async getUser(id) {
+  async findOne(id) {
     return this.userRepository.findOne({
       where: { id },
     });
   }
 
-  async createUser(data) {
+  async create(data) {
     const userdb = await this.userRepository.findOne({
       where: { email: data.email },
     });
@@ -39,7 +39,7 @@ export class UserService {
     });
   }
 
-  async updateUser(userId, data) {
+  async update(userId, data) {
     return this.userRepository.update(userId, data);
   }
 

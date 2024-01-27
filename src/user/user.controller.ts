@@ -14,28 +14,28 @@ export class UserController {
   @Get()
   @Roles(Role.Admin)
   @UseGuards(AuthGuard)
-  getUsers(@Paginate() query: PaginateQuery) {
-    return this.userService.getUsers(query);
+  findAll(@Paginate() query: PaginateQuery) {
+    return this.userService.findAll(query);
   }
 
   @Get(':id')
   @Roles(Role.Admin)
   @UseGuards(AuthGuard)
-  getUser(@Param() params: any) {
-    return this.userService.getUser(params.id);
+  findOne(@Param() params: any) {
+    return this.userService.findOne(params.id);
   }
 
   @Post()
   @Roles(Role.Admin)
   @UseGuards(AuthGuard)
-  createUser(@Body() data: CreateUserDto) {
-    return this.userService.createUser(data);
+  create(@Body() data: CreateUserDto) {
+    return this.userService.create(data);
   }
 
   @Put(':id')
   @Roles(Role.Admin)
   @UseGuards(AuthGuard)
-  updateUser(@Param() params: any, @Body() data: UpdateUserDto) {
-    return this.userService.updateUser(params.id, data);
+  update(@Param() params: any, @Body() data: UpdateUserDto) {
+    return this.userService.update(params.id, data);
   }
 }

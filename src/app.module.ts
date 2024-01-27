@@ -4,9 +4,11 @@ import { AppService } from './app.service';
 import { UserModule } from './user/user.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { User } from './user/user.entity';
 import { AuthModule } from './auth/auth.module';
-export const entities = [User];
+import { CategoryModule } from './category/category.module';
+import { User } from './user/entities/user.entity';
+import { Category } from './category/entities/category.entity';
+export const entities = [User, Category];
 @Module({
   imports: [
     ConfigModule,
@@ -28,6 +30,7 @@ export const entities = [User];
       }),
       inject: [ConfigService],
     }),
+    CategoryModule,
   ],
   controllers: [AppController],
   providers: [AppService],
