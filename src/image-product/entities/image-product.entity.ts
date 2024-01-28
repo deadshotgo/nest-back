@@ -2,29 +2,30 @@ import {
   Column,
   CreateDateColumn,
   Entity,
-  OneToMany,
+  JoinColumn,
+  ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { SubCategory } from '../../sub-category/entities/sub-category.entity';
 import { Product } from '../../product/entities/product.entity';
 
-@Entity({ name: 'category' })
-export class Category {
+@Entity({ name: 'image_product' })
+export class ImageProduct {
   @PrimaryGeneratedColumn()
   id: number;
 
   @Column()
-  name: string;
+  path: string;
 
-  @Column({ name: 'is_active' })
-  isActive: boolean;
+  @Column()
+  main: boolean;
 
-  @OneToMany(() => SubCategory, (subCategory) => subCategory.category)
-  subCategory: SubCategory[];
+  @ManyToOne(() => Product, (product) => product.images)
+  @JoinColumn([{ name: 'product_id', referencedColumnName: 'id' }])
+  product: Product;
 
-  @OneToMany(() => Product, (product) => product.category)
-  products: Product[];
+  @Column({ name: 'product_id' })
+  productId: number;
 
   @CreateDateColumn({
     type: 'timestamp',

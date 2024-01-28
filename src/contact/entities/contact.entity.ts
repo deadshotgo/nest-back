@@ -2,29 +2,29 @@ import {
   Column,
   CreateDateColumn,
   Entity,
-  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { SubCategory } from '../../sub-category/entities/sub-category.entity';
-import { Product } from '../../product/entities/product.entity';
 
-@Entity({ name: 'category' })
-export class Category {
+@Entity({ name: 'contact' })
+export class Contact {
   @PrimaryGeneratedColumn()
   id: number;
 
   @Column()
-  name: string;
+  path: string;
 
-  @Column({ name: 'is_active' })
-  isActive: boolean;
+  @Column()
+  address: string;
 
-  @OneToMany(() => SubCategory, (subCategory) => subCategory.category)
-  subCategory: SubCategory[];
+  @Column()
+  gmail: string;
 
-  @OneToMany(() => Product, (product) => product.category)
-  products: Product[];
+  @Column({ name: 'phone_number' })
+  phoneNumber: string;
+
+  @Column({ name: 'footer_text' })
+  footerText: string;
 
   @CreateDateColumn({
     type: 'timestamp',

@@ -26,5 +26,5 @@ export class UpdateUserDto {
 
   @IsBoolean()
   @ApiProperty()
-  is_active: boolean;
+  isActive: boolean;
 }

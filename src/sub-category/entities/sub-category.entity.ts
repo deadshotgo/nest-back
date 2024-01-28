@@ -3,11 +3,12 @@ import {
   CreateDateColumn,
   Entity,
   JoinColumn,
-  ManyToOne,
+  ManyToOne, OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import { Category } from '../../category/entities/category.entity';
+import { Product } from '../../product/entities/product.entity';
 
 @Entity({ name: 'sub_category' })
 export class SubCategory {
@@ -22,10 +23,13 @@ export class SubCategory {
   category: Category;
 
   @Column({ name: 'category_id' })
-  category_id: number;
+  categoryId: number;
 
   @Column({ name: 'is_active' })
   isActive: boolean;
+
+  @OneToMany(() => Product, (product) => product.subCategory)
+  products: Product[];
 
   @CreateDateColumn({
     type: 'timestamp',

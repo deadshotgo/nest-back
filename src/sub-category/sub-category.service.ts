@@ -1,8 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { CreateSubCategoryDto } from './dto/create-sub-category.dto';
-import { UpdateSubCategoryDto } from './dto/update-sub-category.dto';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Category } from '../category/entities/category.entity';
 import { Repository } from 'typeorm';
 import { SubCategory } from './entities/sub-category.entity';
 import { paginate } from 'nestjs-paginate';

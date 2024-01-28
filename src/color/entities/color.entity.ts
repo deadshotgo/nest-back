@@ -2,29 +2,43 @@ import {
   Column,
   CreateDateColumn,
   Entity,
-  OneToMany,
+  JoinTable,
+  ManyToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { SubCategory } from '../../sub-category/entities/sub-category.entity';
 import { Product } from '../../product/entities/product.entity';
 
-@Entity({ name: 'category' })
-export class Category {
+@Entity({ name: 'color' })
+export class Color {
   @PrimaryGeneratedColumn()
   id: number;
 
   @Column()
   name: string;
 
+  @Column()
+  color: string;
+
   @Column({ name: 'is_active' })
   isActive: boolean;
 
-  @OneToMany(() => SubCategory, (subCategory) => subCategory.category)
-  subCategory: SubCategory[];
-
-  @OneToMany(() => Product, (product) => product.category)
-  products: Product[];
+  @ManyToMany(() => Product, (product) => product.colors, {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  })
+  @JoinTable({
+    name: 'color_products',
+    joinColumn: {
+      name: 'color_id',
+      referencedColumnName: 'id',
+    },
+    inverseJoinColumn: {
+      name: 'product_id',
+      referencedColumnName: 'id',
+    },
+  })
+  products?: Product[];
 
   @CreateDateColumn({
     type: 'timestamp',

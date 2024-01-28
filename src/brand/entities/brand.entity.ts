@@ -6,24 +6,23 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { SubCategory } from '../../sub-category/entities/sub-category.entity';
 import { Product } from '../../product/entities/product.entity';
 
-@Entity({ name: 'category' })
-export class Category {
+@Entity({ name: 'brand' })
+export class Brand {
   @PrimaryGeneratedColumn()
   id: number;
 
   @Column()
   name: string;
 
+  @Column()
+  image: string;
+
   @Column({ name: 'is_active' })
   isActive: boolean;
 
-  @OneToMany(() => SubCategory, (subCategory) => subCategory.category)
-  subCategory: SubCategory[];
-
-  @OneToMany(() => Product, (product) => product.category)
+  @OneToMany(() => Product, (product) => product.brand)
   products: Product[];
 
   @CreateDateColumn({

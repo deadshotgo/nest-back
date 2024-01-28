@@ -1,29 +1,30 @@
-import { ApiProperty } from '@nestjs/swagger';
 import { IsBoolean, IsNotEmpty, IsString } from 'class-validator';
+import { ApiProperty } from '@nestjs/swagger';
 
-export class CreateUserDto {
+export class CreateBlogDto {
   @IsString()
   @IsNotEmpty()
   @ApiProperty()
-  name: string;
-
-  @IsNotEmpty()
-  @ApiProperty()
-  password: string;
+  previewText: string;
 
   @IsNotEmpty()
   @IsString()
   @ApiProperty()
-  email: string;
+  text: string;
 
   @IsNotEmpty()
   @IsString()
   @ApiProperty()
-  role: string;
+  title: string;
 
-  @IsBoolean()
+  @IsNotEmpty()
+  @IsString()
   @ApiProperty()
-  is_admin: boolean;
+  img: string;
+
+  @IsString()
+  @ApiProperty()
+  preview: boolean;
 
   @IsBoolean()
   @ApiProperty()
